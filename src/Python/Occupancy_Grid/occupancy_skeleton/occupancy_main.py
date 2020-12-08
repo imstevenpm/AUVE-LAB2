@@ -48,7 +48,7 @@ def get_pointcloud_slice(sample_token: str, nusc: NuScenes, chosen_height: float
 
 if __name__ == '__main__':
     # load a scene
-    dataroot = '/home/user/dataset/nuscenes'
+    dataroot = '../../../'
     nusc = NuScenes(version='v1.0-mini', dataroot=osp.join(dataroot, 'v1.0-mini'), verbose=False)
     scene = nusc.scene[1]
 
@@ -74,16 +74,19 @@ if __name__ == '__main__':
             w_M_i[:3, :3] = Quaternion(ego_pose['rotation']).rotation_matrix
             w_M_i[:3, 3] = ego_pose['translation']
             # compute pose of i-th ego frame in the first ego frame
-            f0_M_i = np.eye(4)  # TODO: note to inverse a matrix use np.linalg.inv
+            f0_M_i = np.linalg.inv(w_M_0) @ w_M_i  # TODO: note to inverse a matrix use np.linalg.inv [w_M_i = f0_M_i*w_M_0 ]
 
         # get point cloud in i-th ego frame
         points_3d = get_pointcloud_slice(sample_token, nusc, chosen_height=0.5)  # <float: num_points, 3>
 
         # map point cloud from i-th ego frame to the first ego frame
         if i > 0:
-            points_3d = np.array([])  # TODO
+            points_3d = f0_M_i.dot(homogenize(points_3d).T).T # TODO
 
-        vehicle_xy = np.zeros(2)  # TODO: get xy position of i-th ego frame in the first ego frame
+        if i == 0:
+            vehicle_xy = np.zeros(2)
+        else:
+            vehicle_xy = np.array([f0_M_i[0,-1],f0_M_i[1,-1]])  # TODO: get xy position of i-th ego frame in the first ego frame
         vehicle_xy += 200  # for displaying purpose
 
         for j in range(points_3d.shape[0]):

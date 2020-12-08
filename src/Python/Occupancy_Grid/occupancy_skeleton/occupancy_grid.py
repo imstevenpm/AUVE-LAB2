@@ -24,11 +24,11 @@ class Map:
     def update_log_odds(self, x, y, occupied=True):
         x, y = [int(x/self.resolution), int(y/self.resolution)]
         if occupied:
-            self.log_odds_prob[x, y] = 0  # TODO: update the log odds of this OCCUPIED cell using self.log_occupied
+            self.log_odds_prob[x, y] += self.log_occupied  # TODO: update the log odds of this OCCUPIED cell using self.log_occupied
             if self.log_odds_prob[x, y] > 3.5:
                 self.log_odds_prob[x, y] = 3.5
         else:
-            self.log_odds_prob[x, y] = 0  # TODO: update the log odds of this FREE cell using self.log_free
+            self.log_odds_prob[x, y] -= self.log_free  # TODO: update the log odds of this FREE cell using self.log_free
             if self.log_odds_prob[x, y] < -2:
                 self.log_odds_prob[x, y] = -2
 
