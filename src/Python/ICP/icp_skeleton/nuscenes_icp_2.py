@@ -121,7 +121,7 @@ def render_trajectory(all_ego_pose: List[np.ndarray]):
 
 def main():
     # load a scene
-    dataroot = '/home/user/dataset/nuscenes'
+    dataroot = '../../../'
     nusc = NuScenes(version='v1.0-mini', dataroot=osp.join(dataroot, 'v1.0-mini'), verbose=False)
     scene = nusc.scene[0]
 
@@ -151,9 +151,9 @@ def main():
             continue
 
         # get the source pointcloud
-        src_cloud = None  # TODO: create an instance of open3d's PointCloud class
-        points_3d = None  # TODO: get pointcloud using get_pointcloud
-        src_cloud.points = None  # TODO: assign points_3d to src_cloud.points
+        src_cloud = o3d.geometry.PointCloud()  # TODO: create an instance of open3d's PointCloud class
+        points_3d = get_pointcloud(sample_token,nusc)  # TODO: get pointcloud using get_pointcloud
+        src_cloud.points = o3d.utility.Vector3dVector(points_3d) # TODO: assign points_3d to src_cloud.points
 
         # invoke ICP
         reg_p2p = o3d.pipelines.registration.registration_icp(
@@ -162,14 +162,14 @@ def main():
         print(reg_p2p)
         print('target_M_src: \n', reg_p2p.transformation)
 
-        # compute the pose of the current ego frame w.r.t to the world frame
-        w_M_src = np.array([])  # TODO: hint using target_M_src and w_M_target
+        # compute the pose of the current ego frame w.r.t to the world frame 
+        w_M_src = w_M_target.dot(reg_p2p.transformation) # TODO: hint using target_M_src and w_M_target
         all_ego_pose.append(w_M_src)
 
         #
         # update
         #
-        w_M_target = np.array([])  # TODO: update the target frame with the src frame
+        w_M_target = w_M_src  # TODO: update the target frame with the src frame
         trans_init = reg_p2p.transformation   # update guess of ICP solution
         target_cloud = src_cloud  # update target_cloud with src_cloud
 
