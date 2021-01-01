@@ -121,7 +121,7 @@ def render_trajectory(all_ego_pose: List[np.ndarray]):
 
 def main():
     # load a scene
-    dataroot = '../../../'
+    dataroot = osp.relpath("../../../Dataset")
     nusc = NuScenes(version='v1.0-mini', dataroot=osp.join(dataroot, 'v1.0-mini'), verbose=False)
     scene = nusc.scene[0]
 
@@ -179,6 +179,10 @@ def main():
     render_trajectory(all_ego_pose)
 
     render_merged_pointcloud(scene['token'], nusc, all_ego_pose)
+
+    nusc.render_scene(scene['token'])
+
+    print("DONE")
 
 
 if __name__ == '__main__':

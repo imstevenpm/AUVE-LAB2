@@ -48,8 +48,8 @@ def get_pointcloud_slice(sample_token: str, nusc: NuScenes, chosen_height: float
 
 if __name__ == '__main__':
     # load a scene
-    dataroot = '../../../'
-    nusc = NuScenes(version='v1.0-mini', dataroot=osp.join(dataroot, 'v1.0-mini'), verbose=False)
+    dataroot = osp.relpath("../../../Dataset") 
+    nusc = NuScenes(version='v1.0-mini', dataroot=osp.join(dataroot, "v1.0-mini"), verbose=False)
     scene = nusc.scene[1]
 
     env_map = Map(500, 500, resolution=1)
