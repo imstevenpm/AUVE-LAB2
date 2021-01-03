@@ -175,7 +175,7 @@ def main():
 
         # move on the next frame
         sample_token = sample['next']
-
+    
     render_trajectory(all_ego_pose)
 
     render_merged_pointcloud(scene['token'], nusc, all_ego_pose)

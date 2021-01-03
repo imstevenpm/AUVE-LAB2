@@ -1,26 +1,11 @@
-# Lab 2:  ICP & Occupancy Grid Mapping
+# AUVE Practical Session
 
-## Report
+## Lab 2:  ICP & Occupancy Grid Mapping
 
-The lab report called "Lab1_Report_Lee_Palma.pdf" can be found in the following directory: "src/REPORT".
-
-## Explanation steps for using the simulation
-
-### Setup
-
-* The following instructions were last tested using Ubuntu 20.04 on December 6th, 2020.
-* Clone the repository of the project in a desired folder.
-
-
-### Section 1
-
-* XX
-
-### Section 2
-
-* YY
+In the present repository, the code developed for all the AUVE Lab 2 is presented. Moreover, in the report attached the analysis of the results obtained can be found. Each section contains a small explanation of the steps followed -including code snippets- and a brief discussing of the results. All the results shown in this document are of own elaboration and were obtained by running the lab scripts developed using Python 3.8.5, OpenCv 4.4.0, Numpy 1.19.4 and Matplotlib 3.3.2 on December 28th, 2020.
 
 ## Authors
+
 * Justin Lee: leej1996@gmail.com
 * Steven Palma Morera: imstevenpm.work@gmail.com
 
